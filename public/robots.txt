@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zisan.dev/sitemap.xml
