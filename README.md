@@ -33,7 +33,7 @@ Friday appears on every page and answers from `config/site.ts`, `data/projects.t
 
 No key is included. Without one, Friday clearly reports that it is not connected. There is no paid fallback, automatic retry, web search, or embedding service. The endpoint allows five requests per minute and two concurrent requests per server process, bounds request and response sizes, and stops requests after 20 seconds. These local limits reset on server restart and are not shared across server instances; Google's project quota remains authoritative. Free API usage and hosting allowances are separate.
 
-Chat messages are sent to Google Gemini; the widget explains this before sending. Google's free-tier data practices apply (see its pricing/terms). The app does not intentionally persist or log conversations. History stays in memory during page navigation and clears on reload or New chat. Answers can be inaccurate; unknown details should be referred to Contact.
+Chat messages are sent to Google Gemini. Google's free-tier data practices apply (see its pricing/terms). The app does not intentionally persist or log conversations. History stays in memory during page navigation and clears on reload or New chat. Answers can be inaccurate; unknown details should be referred to Contact.
 
 ## Edit content
 

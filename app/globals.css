@@ -18,7 +18,7 @@
 .friday-form input { flex: 1; background: transparent; border: 0; color: var(--foreground); font: inherit; font-size: 16px; padding: 8px; }
 .friday-form button { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border-radius: 6px; background: var(--accent); color: #fff; }
 .friday-form button:disabled { opacity: .4; }
-.friday-footnote { display: flex; gap: 8px; align-items: center; justify-content: space-between; padding: 0 16px 12px; color: var(--muted); font-size: 9px; }
+.friday-footnote { display: flex; justify-content: flex-end; padding: 0 16px 12px; color: var(--muted); font-size: 9px; }
 .friday-footnote button { flex-shrink: 0; text-decoration: underline; min-height: 30px; padding: 0; }
 @media (max-width: 600px) { .friday-widget { --friday-bottom: max(16px, env(safe-area-inset-bottom)); right: 16px; }.friday-panel { max-height: calc(100dvh - 160px - var(--friday-lift)); }.friday-trigger { font-size: 11px; } }
 :root { color-scheme: dark; --line: #ffffff20; --surface: #101010; --ease: cubic-bezier(.22,1,.36,1); }

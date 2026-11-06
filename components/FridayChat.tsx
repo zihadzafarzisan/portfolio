@@ -85,7 +85,7 @@ export function FridayChat() {
         <form className="friday-form" onSubmit={(event) => { event.preventDefault(); void send(input); }}>
           <label className="sr-only" htmlFor="friday-question">Ask Friday a question</label><input ref={field} id="friday-question" placeholder="Ask about Zisan…" value={input} maxLength={1000} onChange={(event) => setInput(event.target.value)} required autoComplete="off" /><button type="submit" disabled={busy || !input.trim()} aria-label="Send message"><Send size={18} /></button>
         </form>
-        <div className="friday-footnote"><span>Messages go to Google Gemini. AI can make mistakes.</span><button type="button" disabled={busy} onClick={() => { setMessages([]); setError(''); setInput(''); field.current?.focus(); }}>New chat</button></div>
+        <div className="friday-footnote"><button type="button" disabled={busy} onClick={() => { setMessages([]); setError(''); setInput(''); field.current?.focus(); }}>New chat</button></div>
       </section>}
       <button ref={trigger} type="button" className="friday-trigger" aria-label={open ? 'Close Friday chat' : 'Chat with Friday'} aria-expanded={open} aria-controls={open ? 'friday-chat' : undefined} onClick={() => open ? close() : setOpen(true)}><MessageCircle size={20} /><span>Ask Friday</span></button>
     </div>
