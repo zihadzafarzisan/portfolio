@@ -1,26 +1,23 @@
 import type { Metadata } from 'next';
-import ProjectsGrid from '@/components/sections/ProjectsGrid';
+import Link from 'next/link';
+import { ProjectExplorer } from '@/components/ProjectExplorer';
+import { projects } from '@/data/projects';
+import { site } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: 'All Projects | Zisan',
-  description: 'A collection of my latest work in web design, ecommerce, and web applications.',
+  title: 'Work',
+  description: site.work.description,
+  ...(site.url ? { alternates: { canonical: '/projects/' } } : {}),
 };
 
 export default function ProjectsPage() {
   return (
-    <main className="pt-24 pb-16 min-h-screen">
-      <div className="container mx-auto px-4">
-        <header className="mb-12 text-center max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold font-sora text-gray-900 dark:text-white mb-4">
-            All Projects
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            Explore my portfolio of web applications, ecommerce platforms, and digital experiences built with modern technologies.
-          </p>
-        </header>
-        
-        <ProjectsGrid />
-      </div>
+    <main id="main" className="archive-page page-shell">
+      <Link className="text-link" href="/">← Back to home</Link>
+      <div className="section-label"><span className="accent-dot" /> THE WORK</div>
+      <h1 className="display section-title">SELECTED<br /><span className="outlined">WORK.</span></h1>
+      <p className="section-intro">{site.work.description}</p>
+      <ProjectExplorer projects={projects} />
     </main>
   );
 }

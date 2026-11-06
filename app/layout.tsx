@@ -1,66 +1,48 @@
 import type { Metadata } from 'next';
-import { Sora, Inter } from 'next/font/google';
+import localFont from 'next/font/local';
+import type { CSSProperties } from 'react';
+import { site } from '@/config/site';
+import { MotionProvider } from '@/components/MotionProvider';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
 import './globals.css';
-import { ThemeProvider } from '@/components/layout/ThemeProvider';
-import { ThemeScript } from '@/components/layout/ThemeScript';
-import { AdminAuthProvider } from '@/context/AdminAuthContext';
-import { SiteConfigProvider } from '@/context/SiteConfigContext';
-import { PublicLayout } from '@/components/layout/PublicLayout';
 
-const sora = Sora({
-  subsets: ['latin'],
-  variable: '--font-sora',
-  display: 'swap',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
+const display = localFont({ src: '../public/fonts/Anton-Regular.ttf', variable: '--font-display', display: 'swap', weight: '400' });
+const body = localFont({ src: '../public/fonts/Manrope-Variable.ttf', variable: '--font-body', display: 'swap', weight: '200 800' });
+const handwriting = localFont({ src: '../public/fonts/Caveat-Variable.ttf', variable: '--font-handwriting', display: 'swap', weight: '400 700', preload: false });
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Zisan — Web Designer & Developer',
-    template: '%s | Zisan',
-  },
-  description: 'I design high-converting websites that help businesses look premium and get more customers.',
-  keywords: ['web designer', 'web developer', 'freelance', 'Next.js', 'React', 'portfolio'],
-  authors: [{ name: 'Zisan' }],
+  title: { default: `${site.fullName} — ${site.profession}`, template: `%s | ${site.name}` },
+  description: site.description,
+  authors: [{ name: site.fullName }],
+  ...(site.url ? { metadataBase: new URL(site.url), alternates: { canonical: '/' } } : {}),
   openGraph: {
+    title: `${site.name} — Curious mind. Builder at heart.`,
+    description: site.description,
+    siteName: site.name,
     type: 'website',
-    locale: 'en_US',
-    url: 'https://zisan.dev',
-    siteName: 'Zisan',
-    title: 'Zisan — Web Designer & Developer',
-    description: 'I design high-converting websites that help businesses look premium and get more customers.',
+    ...(site.url ? { url: site.url, images: [{ url: '/social-card.png', width: 1200, height: 630 }] } : {}),
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Zisan — Web Designer & Developer',
-    description: 'I design high-converting websites that help businesses look premium and get more customers.',
-  },
-  robots: { index: true, follow: true },
+  twitter: { card: 'summary_large_image', title: site.fullName, description: site.description },
+  icons: { icon: '/icon.svg', apple: '/apple-icon.png' },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const tokens = {
+    '--background': site.appearance.background,
+    '--foreground': site.appearance.text,
+    '--accent': site.appearance.accent,
+    '--muted': site.appearance.muted,
+  } as CSSProperties;
   return (
-    <html lang="en" suppressHydrationWarning className={`${sora.variable} ${inter.variable}`}>
-      <head>
-        <ThemeScript />
-      </head>
-      <body className="min-h-screen bg-background text-foreground antialiased font-sans flex flex-col">
-        <AdminAuthProvider>
-          <SiteConfigProvider>
-            <ThemeProvider>
-              <PublicLayout>{children}</PublicLayout>
-            </ThemeProvider>
-          </SiteConfigProvider>
-        </AdminAuthProvider>
+    <html lang={site.language} className={`${display.variable} ${body.variable} ${handwriting.variable}`} style={tokens}>
+      <body>
+        <a className="skip-link" href="#main">Skip to content</a>
+        <MotionProvider>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </MotionProvider>
       </body>
     </html>
   );

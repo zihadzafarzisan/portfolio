@@ -1,28 +1,7 @@
 import type { MetadataRoute } from 'next';
-import { projects } from '@/data/projects';
+import { site } from '@/config/site';
 
+export const dynamic = 'force-static';
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://zisan.dev';
-
-  const routes = [
-    '',
-    '/about',
-    '/projects',
-    '/contact',
-    '/blog',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: route === '' ? 1 : 0.8,
-  }));
-
-  const projectRoutes = projects.map((project) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
-
-  return [...routes, ...projectRoutes];
+  return site.url ? ['', '/projects/', '/journey/'].map((path) => ({ url: `${site.url.replace(/\/$/, '')}${path || '/'}`, changeFrequency: 'monthly', priority: path ? 0.7 : 1 })) : [];
 }

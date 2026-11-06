@@ -1,94 +1,66 @@
-# Zisan's Portfolio Website
+﻿# ZISAN — Personal portfolio
 
-A fast, modern, and production-ready personal portfolio website for **Zisan** (Web Designer & Developer). Built with Next.js 16+ (App Router), TypeScript, Tailwind CSS v4, Framer Motion, and React Hook Form + Zod.
+A dark editorial portfolio for **Zihad Zafar Zisan**, a CSE undergraduate at BRAC University. Built with Next.js 16, React 19, TypeScript, vanilla CSS, Lucide, and Framer Motion. Fonts are self-hosted: Anton, Manrope, and Caveat (licenses in `public/fonts/`).
 
-## Features
+## Run locally
 
-- **Theme System**: Dark/Light mode toggle with system preference fallback, persisted via `localStorage`, with no flash of wrong theme on page load.
-- **Single-Page Home + Dedicated Routes**:
-  - `/` — Home page with smooth anchor navigation across all sections
-  - `/about` — Detailed About page with skills breakdown and resume download link
-  - `/projects` — Full project showcase with animated category filtering (Framer Motion `layout`)
-  - `/projects/[slug]` — Individual case study page with interactive Before/After image slider, problem/solution breakdown, tech stack tags, and live links
-  - `/contact` — Standalone contact page reusing the validated contact form
-  - `/blog` — "Coming Soon" stub page with newsletter subscription UI
-  - `/api/contact` — Serverless API route validating contact messages using Zod
-- **Rich Motion & Aesthetics**:
-  - GPU-accelerated gradient blob background animation
-  - Subtle mouse-following gradient spotlight (auto-disabled on touch devices)
-  - Animated scroll-triggered counters for stats
-  - Horizontal desktop process stepper & vertical mobile timeline with animated SVG lines
-  - Infinite auto-scrolling marquee for client testimonials and tech stack logos
-  - Full support for `prefers-reduced-motion` across all Framer Motion components
+Use Node.js **22.18 or newer**. The repository uses pnpm; npm commands work after dependencies are installed.
 
----
-
-## Tech Stack
-
-- **Framework:** Next.js 16 (App Router)
-- **Language:** TypeScript (Strict mode)
-- **Styling:** Tailwind CSS v4
-- **Animation:** Framer Motion 13 + CSS Keyframes
-- **Fonts:** Sora (Headings) + Inter (Body) via `next/font/google`
-- **Icons:** `lucide-react`
-- **Forms & Validation:** React Hook Form + Zod (`@hookform/resolvers`)
-- **Package Manager:** `pnpm`
-
----
-
-## Getting Started
-
-### Prerequisites
-
-Ensure you have Node.js 18+ and `pnpm` installed.
-
-### Installation
-
-```bash
-# Clone or navigate to project directory
-cd zisan-portfolio
-
-# Install dependencies
-pnpm install
+```powershell
+npx.cmd --yes pnpm@11.20.0 install --frozen-lockfile
+npm.cmd run dev
 ```
 
-### Running Locally
+Open http://localhost:3000. On Windows, use `npm.cmd` if PowerShell blocks `npm.ps1`. Other shells can use `npm`.
 
-```bash
-# Start development server
-pnpm dev
+```sh
+npm run check
+npm test
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+`npm run build` generates a standalone **out/** directory. `npm start` serves that export locally; no application backend is required. Deploy the contents of `out/` to any static host that supports directory index files and `404.html`. Nothing has been published or pushed automatically.
 
-### Building for Production
+The build also normalizes Next.js segment prefetch filenames on Windows so page links work on ordinary static hosts.
 
-```bash
-# Build static & serverless routes
-pnpm build
+## Edit content
 
-# Preview production build
-pnpm start
+- **config/site.ts**: name, bio, education label, email, phone, WhatsApp, copy, brand colors, production domain, and optional resume.
+- **public/assets/avatar.png**: the supplied transparent illustrated avatar, displayed in the hero. Its path and alt text are configured in `site.avatar`.
+- **data/projects.ts**: real projects, covers, gallery images, tools, category, source/live links, and featured ordering. Intentionally empty as requested. A commented schema is included.
+- **data/experience.ts**: education and future experience entries. No dates, employers, awards, or metrics have been invented.
+- **app/globals.css**: responsive layout and presentation. Fonts load locally through `next/font/local` in the root layout.
+- **public/assets/**: add your own project screenshots and optional portrait/resume. No portrait is required by this design.
+
+Add a real production URL to `site.url` before deployment. Canonical URLs and sitemap entries are omitted while it is empty. Brand icons and social preview artwork are generated from the config by `scripts/generate-assets.mjs` during builds.
+
+The GitHub profile is derived from the supplied repository. Email and phone are the public details supplied in the conversation. WhatsApp uses the Bangladesh international format, +8801781205471.
+
+## Behavior
+
+- Fully rendered initial HTML: essential content and anchor links work with JavaScript disabled.
+- Home contains the introduction, about, and contact sections. Work lives on `/projects/` and Journey on `/journey/`, with dedicated navigation links and page titles.
+- Responsive menu with modal focus handling, Escape close, and restored trigger focus.
+- Motion is enabled by default and the build effect plays automatically on each page load. The toggle can pause motion for the current visit; reloading enables it again. Clicking Motion replays the non-blocking cursor/drawing effect on the visible section, including the project archive. Playback clears automatically or can be stopped with Escape. System reduced motion is respected, and the control explains when that setting pauses playback.
+- Real project entries automatically enable search, derived category filters, featured ordering, six-item pagination, and accessible project details. Optional YouTube embeds load only after a visitor activates them, using the privacy-enhanced host.
+- Education uses a native expandable disclosure.
+- The contact form validates fields and opens a **mailto draft**. It does not send email or claim delivery. Direct email, phone, and WhatsApp links are available.
+- The old browser-only admin CMS, fake content, stub email/newsletter handlers, broken image references, and placeholder resume have been removed. Content is managed through the repository.
+
+## Browser checks
+
+```sh
+npm run build
+npm run test:browser
 ```
 
----
+Tests use the installed Google Chrome (`channel: 'chrome'`); no browser download is necessary on this machine. For another browser, change the channel in `playwright.config.ts`. They verify 1440, 768, 390, and 320px layouts, initial HTML, empty work state, education disclosure, form validity, contact URLs, mobile keyboard navigation, and motion preferences. Screenshots are saved in ignored `test-results/`.
 
-## Content Customization & TODOs
+Pure project filtering and safe YouTube URL handling are covered by `npm test`. Full project interaction needs real project entries before final content QA.
 
-All content is structured as typed TypeScript data files for easy editing:
+## Design provenance
 
-1. **Projects (`/data/projects.ts`)**:
-   - Single source of truth for home page featured projects, `/projects` grid, and dynamic `/projects/[slug]` case studies.
-   - Edit project details, before/after image paths, live demo links, and technologies.
-2. **Testimonials (`/data/testimonials.ts`)**:
-   - Replace placeholder testimonial quotes, client names, roles, and avatar images.
-3. **Services (`/data/services.ts`)**:
-   - Edit the 6 core services offered, their descriptions, and corresponding Lucide icon names.
-4. **Tech Stack (`/data/tech-stack.ts`)**:
-   - Customize the list of tools and technologies shown in the grid/marquee.
-5. **Resume PDF (`/public/resume.pdf`)**:
-   - Replace the placeholder PDF at `/public/resume.pdf` with your actual resume document.
-6. **Contact Email API (`/app/api/contact/route.ts`)**:
-   - Currently logs form submissions to console with a clear `TODO` comment to integrate [Resend](https://resend.com) or EmailJS.
-7. **Calendly Link**:
-   - Update `https://calendly.com/zisan` in `components/layout/Navbar.tsx` and `components/sections/Hero.tsx` with your real booking link.
+`Website_portfolio_details.md` is the supplied brief. The reference website could not be loaded during this session, so this design interprets the written brief rather than claiming a verified reproduction. No code or assets from the reference owner were copied. The linked Swarm project states it has no reuse license; the drawing effect here is original and dependency-free.
+
+`REPOSITORY_AUDIT.md` records the original 71-file inspection and baseline findings. It describes the old application, not the rebuilt implementation.
