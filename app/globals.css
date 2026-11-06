@@ -104,6 +104,7 @@ button, a, input, textarea, summary { touch-action: manipulation; }
   mask-image: radial-gradient(ellipse closest-side at 50% 55%, #000 0%, #000b 45%, transparent 100%);
 }
 .avatar-caption { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding-top: 14px; font-size: 10px; }
+.avatar-name { font-weight: 700; }
 .avatar-caption .micro { color: var(--muted); font-size: 7px; }
 @media (max-width: 800px) { .avatar-caption { flex-direction: column; align-items: flex-start; gap: 4px; font-size: 9px; } }
 @media (max-width: 600px) { .hero-avatar { max-width: 360px; margin: 38px auto 8px; }.hero-avatar-frame { aspect-ratio: 1; }.avatar-caption { flex-direction: row; align-items: center; gap: 10px; font-size: 10px; }.avatar-caption .micro { font-size: 6px; } }

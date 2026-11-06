@@ -45,7 +45,7 @@ function HeroAvatar() {
         />
         </div>
       </div>
-      <figcaption className="avatar-caption"><span>{site.fullName}</span><span className="micro">ME, ILLUSTRATED.</span></figcaption>
+      <figcaption className="avatar-caption"><span className="avatar-name">{site.fullName.toUpperCase()}</span><span className="micro">ME, ILLUSTRATED.</span></figcaption>
     </figure>
   );
 }
