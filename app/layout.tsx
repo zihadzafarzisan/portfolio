@@ -5,6 +5,7 @@ import { site } from '@/config/site';
 import { MotionProvider } from '@/components/MotionProvider';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
+import { FridayChat } from '@/components/FridayChat';
 import './globals.css';
 
 const display = localFont({ src: '../public/fonts/Anton-Regular.ttf', variable: '--font-display', display: 'swap', weight: '400' });
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SiteHeader />
           {children}
           <SiteFooter />
+          <FridayChat />
         </MotionProvider>
       </body>
     </html>

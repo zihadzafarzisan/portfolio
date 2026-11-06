@@ -8,11 +8,11 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/generate-assets.mjs && next build && node scripts/finalize-export.mjs",
-    "start": "node scripts/serve.mjs",
+    "build": "node scripts/generate-assets.mjs && next build",
+    "start": "next start",
     "lint": "eslint .",
     "check": "eslint . && tsc --noEmit",
-    "test": "node --experimental-strip-types --test tests/project-utils.test.ts",
+    "test": "node --experimental-strip-types --test tests/project-utils.test.ts tests/friday.test.ts",
     "test:browser": "node scripts/test-browser.mjs"
   },
   "dependencies": {

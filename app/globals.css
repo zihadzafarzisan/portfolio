@@ -1,4 +1,26 @@
 /* Brand values are set from config/site.ts on the root element. */
+.friday-widget { --friday-bottom: 20px; --friday-lift: 0px; position: fixed; right: 24px; bottom: calc(var(--friday-bottom) + var(--friday-lift)); z-index: 200; }
+.friday-trigger { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 18px; border: 1px solid #ffffff35; border-radius: 30px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; box-shadow: 0 8px 32px #0007; margin-left: auto; }
+.friday-panel { display: flex; flex-direction: column; width: min(390px, calc(100vw - 32px)); height: 570px; max-height: calc(100dvh - 170px - var(--friday-lift)); margin-bottom: 12px; background: #101010; border: 1px solid #ffffff35; border-radius: 12px; box-shadow: 0 12px 50px #0009; overflow: hidden; }
+.friday-heading { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.friday-heading h2 { display: flex; align-items: center; gap: 9px; font-size: 18px; }
+.friday-heading p { font-size: 10px; color: var(--muted); }
+.friday-transcript { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 18px; }
+.friday-message { width: fit-content; max-width: 95%; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; line-height: 1.8; padding: 11px 13px; border-radius: 9px; margin-bottom: 14px; }
+.friday-model { background: #ffffff09; border: 1px solid var(--line); }
+.friday-user { margin-left: auto; background: #e32b3c25; border: 1px solid #e32b3c55; }
+.friday-status, .friday-error { font-size: 11px; color: var(--muted); }
+.friday-error a { display: block; color: var(--foreground); text-decoration: underline; padding-block: 6px; }
+.friday-suggestions { display: flex; flex-wrap: wrap; gap: 7px; padding: 0 18px 12px; }
+.friday-suggestions button { border: 1px solid var(--line); border-radius: 14px; font-size: 10px; padding: 7px 10px; text-align: left; }
+.friday-suggestions button:hover { border-color: var(--accent); }
+.friday-form { display: flex; flex-shrink: 0; border-top: 1px solid var(--line); padding: 10px 12px; gap: 8px; }
+.friday-form input { flex: 1; background: transparent; border: 0; color: var(--foreground); font: inherit; font-size: 16px; padding: 8px; }
+.friday-form button { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border-radius: 6px; background: var(--accent); color: #fff; }
+.friday-form button:disabled { opacity: .4; }
+.friday-footnote { display: flex; gap: 8px; align-items: center; justify-content: space-between; padding: 0 16px 12px; color: var(--muted); font-size: 9px; }
+.friday-footnote button { flex-shrink: 0; text-decoration: underline; min-height: 30px; padding: 0; }
+@media (max-width: 600px) { .friday-widget { --friday-bottom: max(16px, env(safe-area-inset-bottom)); right: 16px; }.friday-panel { max-height: calc(100dvh - 160px - var(--friday-lift)); }.friday-trigger { font-size: 11px; } }
 :root { color-scheme: dark; --line: #ffffff20; --surface: #101010; --ease: cubic-bezier(.22,1,.36,1); }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 100px; }

@@ -20,9 +20,20 @@ npm run build
 npm start
 ```
 
-`npm run build` generates a standalone **out/** directory. `npm start` serves that export locally; no application backend is required. Deploy the contents of `out/` to any static host that supports directory index files and `404.html`. Nothing has been published or pushed automatically.
+`npm run build` creates a Next.js production build in **.next/**. `npm start` runs the site and Friday's server endpoint. Deploy using a Next.js server host (for example, a compatible Node.js service or Vercel), with the environment variables below configured privately. The site now needs a server; old **out/** exports and `scripts/serve.mjs` do not include Friday's API. Nothing is deployed automatically.
 
-The build also normalizes Next.js segment prefetch filenames on Windows so page links work on ordinary static hosts.
+## Friday chat assistant
+
+Friday appears on every page and answers from `config/site.ts`, `data/projects.ts`, and `data/experience.ts`. Updating those files and redeploying updates its knowledge. The browser calls `/api/chat/`; the server supplies portfolio context to Gemini. It does not crawl third-party sites or upload the CV and screenshots.
+
+1. Create an API key at https://aistudio.google.com/api-keys in a project **without paid billing enabled**. This is what prevents paid API usage; application request limits alone cannot guarantee zero cost on a billed project.
+2. Copy `.env.example` to `.env.local` and enter the key as `GEMINI_API_KEY`. Never use `NEXT_PUBLIC_` or commit the key. Set the same secret privately in your hosting dashboard.
+3. The default model is `gemini-3.1-flash-lite`, currently listed with a free tier at https://ai.google.dev/gemini-api/docs/pricing. Set `GEMINI_MODEL` if your project needs a different free-tier model. Check availability and quota in AI Studio; do not switch to a paid project to bypass a limit.
+4. Restart `npm run dev`, or run `npm run build` then `npm start` for production.
+
+No key is included. Without one, Friday clearly reports that it is not connected. There is no paid fallback, automatic retry, web search, or embedding service. The endpoint allows five requests per minute and two concurrent requests per server process, bounds request and response sizes, and stops requests after 20 seconds. These local limits reset on server restart and are not shared across server instances; Google's project quota remains authoritative. Free API usage and hosting allowances are separate.
+
+Chat messages are sent to Google Gemini; the widget explains this before sending. Google's free-tier data practices apply (see its pricing/terms). The app does not intentionally persist or log conversations. History stays in memory during page navigation and clears on reload or New chat. Answers can be inaccurate; unknown details should be referred to Contact.
 
 ## Edit content
 
