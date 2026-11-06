@@ -57,7 +57,7 @@ export function PortfolioHome() {
         <div className="hero-topline"><span className="micro">PERSONAL PORTFOLIO / {site.name}</span><span className="micro hero-student">{site.profession}<span className="accent-dot" />{site.university}</span></div>
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="hero-greeting"><span className="greeting-line" /> HI, I’M {site.name}<span className="hero-wave" aria-hidden="true">✳</span></p>
+            <p className="hero-greeting"><span className="greeting-line" /> HI, I’M {site.name}</p>
             <h1 id="hero-title" className="display hero-title" data-build>{site.hero.lines.map((line, index) => <span key={line} className={index === 2 ? 'accent-text' : ''}>{line}{index === 2 && <span className="hero-period">.</span>}</span>)}</h1>
             <p className="hero-intro" data-build>{site.hero.introduction}</p>
             <div className="hero-buttons" data-build><Link className="button button-primary" href="/projects/">Explore my work <ArrowUpRight size={18} /></Link><Link className="button button-text" href="/contact/">Get in touch <ArrowUpRight size={17} /></Link></div>
