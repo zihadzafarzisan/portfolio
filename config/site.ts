@@ -25,11 +25,13 @@ export const site = {
       'Always eager to learn, build, and grow as a software engineer.',
     ],
   },
-  interests: [
-    { title: 'Software development', text: 'Turning ideas into useful, functional applications.', icon: 'code' },
-    { title: 'AI & automation', text: 'Exploring smarter ways to solve everyday problems.', icon: 'spark' },
-    { title: 'Databases & backend', text: 'Getting curious about the logic behind the interface.', icon: 'database' },
-    { title: 'Interactive systems', text: 'Connecting backend logic with user-focused experiences.', icon: 'layers' },
+  // Technical skills from the supplied CV; OOP is listed once to avoid duplication.
+  skills: [
+    { title: 'Programming & logic', icon: 'code', items: ['Python', 'Java', 'Object-oriented programming', 'Data structures', 'Algorithmic problem solving'] },
+    { title: 'Web development', icon: 'layers', items: ['HTML', 'CSS', 'JavaScript', 'Database-driven applications', 'Dashboard development'] },
+    { title: 'Frameworks & libraries', icon: 'spark', items: ['Pandas', 'NumPy'] },
+    { title: 'Databases', icon: 'database', items: ['MySQL', 'PostgreSQL'] },
+    { title: 'Concepts & tools', icon: 'code', items: ['REST APIs', 'FastAPI', 'Database design', 'Git', 'Docker', 'SSH'] },
   ],
   contact: {
     email: 'zihad.zisann@gmail.com',
@@ -50,7 +52,7 @@ export const site = {
   },
   work: {
     title: 'SELECTED WORK',
-    description: 'An evolving collection of things I build, explore, and learn along the way.',
+    description: 'Software, automation, and research projects—from academic reminders to student dashboards and algorithmic systems.',
     emptyTitle: 'A SPACE FOR\nWHAT’S NEXT.',
     emptyDescription: 'This is where I’ll share the things I build. More soon.',
   },
@@ -62,6 +64,6 @@ export const navigation = [
   { label: 'Home', href: '/', id: 'home' },
   { label: 'Work', href: '/projects/', id: 'work' },
   { label: 'Journey', href: '/journey/', id: 'journey' },
-  { label: 'About', href: '/#about', id: 'about' },
-  { label: 'Contact', href: '/#contact', id: 'contact' },
+  { label: 'About', href: '/about/', id: 'about' },
+  { label: 'Contact', href: '/contact/', id: 'contact' },
 ] as const;

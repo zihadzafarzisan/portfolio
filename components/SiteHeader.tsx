@@ -10,7 +10,6 @@ import { useMotion } from './MotionProvider';
 import { trapDialogFocus } from '@/lib/dialog-focus';
 
 export function SiteHeader() {
-  const [active, setActive] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [motionNotice, setMotionNotice] = useState(false);
   const menu = useRef<HTMLDialogElement>(null);
@@ -19,25 +18,9 @@ export function SiteHeader() {
   const pathname = usePathname();
   const { scrollYProgress } = useScroll();
 
-  function currentLocation(item: typeof navigation[number]): 'location' | 'page' | undefined {
-    if (item.id === 'home') return pathname === '/' && !active ? 'page' : undefined;
-    if (item.href.includes('#')) return pathname === '/' && active === item.id ? 'location' : undefined;
+  function currentLocation(item: typeof navigation[number]): 'page' | undefined {
     return pathname.replace(/\/$/, '') === item.href.replace(/\/$/, '') ? 'page' : undefined;
   }
-
-  useEffect(() => {
-    if (pathname !== '/') return;
-    const visible = new Set<string>();
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) visible.add(entry.target.id);
-        else visible.delete(entry.target.id);
-      }
-      setActive([...visible][0] || '');
-    }, { rootMargin: '-20% 0px -50% 0px' });
-    navigation.forEach(({ id }) => { const element = document.getElementById(id); if (element) observer.observe(element); });
-    return () => observer.disconnect();
-  }, [pathname]);
 
   useEffect(() => {
     if (menuOpen) { menu.current?.showModal(); const previous = document.body.style.overflow; document.body.style.overflow = 'hidden'; return () => { document.body.style.overflow = previous; }; }
@@ -71,7 +54,7 @@ export function SiteHeader() {
               <button className="motion-switch" role="switch" aria-checked={enabled} aria-disabled={reducedMotion} aria-label="Enable animations" onClick={toggleMotion} title="Animations respect your system’s reduced-motion preference"><span /></button>
               {motionNotice && reducedMotion && <div className="motion-notice"><p role="status">Your device’s reduced-motion setting is on. Turn it off in accessibility settings to play animations.</p><button className="icon-button" onClick={() => setMotionNotice(false)} aria-label="Dismiss motion message"><X size={14} /></button></div>}
             </div>
-            <Link className="header-contact" href="/#contact">Let’s talk <ArrowUpRight size={16} /></Link>
+            <Link className="header-contact" href="/contact/">Let’s talk <ArrowUpRight size={16} /></Link>
             <button ref={trigger} className="menu-trigger icon-button" aria-label="Open navigation" aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(true)}><Menu size={23} /></button>
           </div>
         </div>

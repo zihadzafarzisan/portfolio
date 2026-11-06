@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { MotionConfig } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 import { BuildAnimation } from './BuildAnimation';
 
 const eventName = 'portfolio-motion-change';
@@ -30,11 +31,11 @@ function savePreference(enabled: boolean) {
 const MotionContext = createContext({ enabled: false, reducedMotion: false, replay: () => {}, toggle: () => {} });
 
 export function MotionProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const enabled = useSyncExternalStore(subscribe, snapshot, () => false);
   const reducedMotion = useSyncExternalStore(subscribe, systemSnapshot, () => false);
   const [sequence, setSequence] = useState(1);
   const nextSequence = useRef(1);
-  const stop = useCallback(() => setSequence(0), []);
   const replay = useCallback(() => {
     if (systemSnapshot()) return;
     savePreference(true);
@@ -42,15 +43,15 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
   }, []);
   const toggle = useCallback(() => {
     if (systemSnapshot()) return;
-    if (enabled) { savePreference(false); stop(); }
+    if (enabled) savePreference(false);
     else replay();
-  }, [enabled, replay, stop]);
+  }, [enabled, replay]);
   useEffect(() => { document.documentElement.dataset.motion = enabled ? 'on' : 'off'; }, [enabled]);
   return (
     <MotionContext.Provider value={{ enabled, reducedMotion, replay, toggle }}>
       <MotionConfig reducedMotion={enabled ? 'user' : 'always'} transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.65 }}>
         {children}
-        <BuildAnimation enabled={enabled} sequence={sequence} onComplete={stop} />
+        <BuildAnimation key={pathname} enabled={enabled} sequence={sequence} />
       </MotionConfig>
     </MotionContext.Provider>
   );

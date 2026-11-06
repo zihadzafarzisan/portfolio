@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Original, self-contained drawing effect. It never clones, replaces, or blocks page content.
-export function BuildAnimation({ enabled, sequence, onComplete }: { enabled: boolean; sequence: number; onComplete: () => void }) {
+export function BuildAnimation({ enabled, sequence }: { enabled: boolean; sequence: number }) {
   const canvas = useRef<HTMLCanvasElement>(null);
+  const [completedSequence, setCompletedSequence] = useState(0);
+  const playing = enabled && sequence !== completedSequence;
   useEffect(() => {
-    if (!enabled || sequence === 0 || !canvas.current) return;
+    if (!playing || !canvas.current) return;
     const element = canvas.current;
     const context = element.getContext('2d');
     if (!context) return;
@@ -37,12 +39,12 @@ export function BuildAnimation({ enabled, sequence, onComplete }: { enabled: boo
     let frame = 0;
     const duration = 3000;
     const clear = () => context.clearRect(0, 0, element.width / ratio, element.height / ratio);
-    const stop = () => { cancelAnimationFrame(frame); clear(); onComplete(); };
+    const stop = () => { cancelAnimationFrame(frame); clear(); setCompletedSequence(sequence); };
     function draw(now: number) {
       if (!context) return;
       const elapsed = now - start;
       clear();
-      if (elapsed >= duration) { onComplete(); return; }
+      if (elapsed >= duration) { stop(); return; }
       if (refreshTargets) { targets = collectTargets(); refreshTargets = false; }
       context.globalAlpha = Math.min(1, (duration - elapsed) / 500);
       targets.forEach((rect, index) => {
@@ -78,6 +80,6 @@ export function BuildAnimation({ enabled, sequence, onComplete }: { enabled: boo
       window.removeEventListener('resize', stop);
       window.removeEventListener('scroll', onScroll);
     };
-  }, [enabled, sequence, onComplete]);
-  return enabled && sequence > 0 ? <canvas className="build-canvas" aria-hidden="true" ref={canvas} /> : null;
+  }, [playing, sequence]);
+  return playing ? <canvas className="build-canvas" aria-hidden="true" ref={canvas} /> : null;
 }

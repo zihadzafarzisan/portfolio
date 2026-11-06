@@ -26,9 +26,11 @@ The build also normalizes Next.js segment prefetch filenames on Windows so page 
 
 ## Edit content
 
-- **config/site.ts**: name, bio, education label, email, phone, WhatsApp, copy, brand colors, production domain, and optional resume.
+- **config/site.ts**: name, bio, technical skill groups, education label, email, phone, WhatsApp, copy, brand colors, production domain, and optional resume.
 - **public/assets/avatar.png**: the supplied transparent illustrated avatar, displayed in the hero. Its path and alt text are configured in `site.avatar`.
-- **data/projects.ts**: real projects, covers, gallery images, tools, category, source/live links, and featured ordering. Intentionally empty as requested. A commented schema is included.
+- **public/assets/projects/friday-reminder/**: all eight supplied FRIDAY screenshots. The web dashboard is the cover; the remaining seven appear with captions in project details. The live project link points to `https://friday.alwaysdata.net`.
+- **public/assets/projects/friday-trading/**: all five supplied trading bot screenshots. The testnet terminal is the cover; Discord notifications and the bot workspace appear in the gallery with full-size links.
+- **data/projects.ts**: four projects transcribed from the supplied CV, including their descriptions and embedded links. Student OS retains its concept/exploration status. Add screenshots, dates, and galleries when available; the current covers use typography.
 - **data/experience.ts**: education and future experience entries. No dates, employers, awards, or metrics have been invented.
 - **app/globals.css**: responsive layout and presentation. Fonts load locally through `next/font/local` in the root layout.
 - **public/assets/**: add your own project screenshots and optional portrait/resume. No portrait is required by this design.
@@ -40,9 +42,10 @@ The GitHub profile is derived from the supplied repository. Email and phone are 
 ## Behavior
 
 - Fully rendered initial HTML: essential content and anchor links work with JavaScript disabled.
-- Home contains the introduction, about, and contact sections. Work lives on `/projects/` and Journey on `/journey/`, with dedicated navigation links and page titles.
+- Each menu item opens its own page: Home (`/`), Work (`/projects/`), Journey (`/journey/`), About (`/about/`), and Contact (`/contact/`). The homepage contains the introduction and avatar; the biography and CV skills are on About, and contact links and the form are on Contact.
+- Technical skills in About and the four Work entries come from the CV's Skills and Projects sections. The full CV is not served as a public download.
 - Responsive menu with modal focus handling, Escape close, and restored trigger focus.
-- Motion is enabled by default and the build effect plays automatically on each page load. The toggle can pause motion for the current visit; reloading enables it again. Clicking Motion replays the non-blocking cursor/drawing effect on the visible section, including the project archive. Playback clears automatically or can be stopped with Escape. System reduced motion is respected, and the control explains when that setting pauses playback.
+- Motion is enabled by default and the build effect plays automatically on each page load and whenever visitors navigate to another page, including browser Back and Forward. The toggle can pause motion for the current visit; reloading enables it again. Clicking Motion replays the non-blocking cursor/drawing effect on the visible section. Playback clears automatically or can be stopped with Escape. System reduced motion is respected, and the control explains when that setting pauses playback.
 - Real project entries automatically enable search, derived category filters, featured ordering, six-item pagination, and accessible project details. Optional YouTube embeds load only after a visitor activates them, using the privacy-enhanced host.
 - Education uses a native expandable disclosure.
 - The contact form validates fields and opens a **mailto draft**. It does not send email or claim delivery. Direct email, phone, and WhatsApp links are available.
